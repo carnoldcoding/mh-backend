@@ -1,0 +1,17 @@
+'''
+I want to learn how to self-host a site.
+Building Monster Hunter Builder
+
+Ideas
+-
+-
+-
+
+Tech I want to learn
+-NGINX
+-Self Hosting
+-Web Servers
+-Docker
+-CORS
+
+'''
