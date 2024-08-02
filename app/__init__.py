@@ -1,11 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
-from app.equipment.routes import equipment
-from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from app.extensions import db
 import os
 
-db = SQLAlchemy()
+from app.equipment.routes import equipment
 
 def create_app():
     #Load Environemntal Variables
