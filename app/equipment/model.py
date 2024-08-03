@@ -3,16 +3,20 @@ from app import db
 class WeaponText(db.Model):
     __tablename__ = "weapon_text"
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, db.ForeignKey('weapon.id'), primary_key = True)
     lang_id = db.Column(db.Text)
     name = db.Column(db.Text)
+    weapon = db.relationship('Weapon', backref=db.backref('weapon_text', lazy=True))
+    #db.relationship ties WeaponText back to Weapon, under the property 'weapon_text'
+    #this states that every WeaponText has a Weapon, and Weapons can have many WeaponText
 
 class WeaponSkill(db.Model):
     __tablename__ = "weapon_skill"
 
-    id = db.Column(db.Integer, primary_key = True)
+    weapon_id = db.Column(db.Integer, db.ForeignKey('weapon.id'), primary_key = True)
     skilltree_id = db.Column(db.Integer)
     level = db.Column(db.Integer)
+
 
 class Weapon(db.Model):
     __tablename__ = "weapon"

@@ -1,8 +1,15 @@
-from flask import jsonify
 from app.equipment.model import Weapon, WeaponSkill, WeaponText
+from app import db
+from sqlalchemy import select
 
-def get_weapons():
-    weapons = Weapon.query.limit(1).all()
+def get_weapons(weapon_type):
+    stmt = select(Weapon, WeaponText).join(WeaponText.weapon).where(WeaponText.lang_id == "en")
+    
+    if weapon_type:
+        stmt = stmt.where(Weapon.weapon_type == weapon_type)
+    
+    weapon_data = db.session.scalars(stmt.limit(10))
+
     weapon_list = [{
         'id': w.id ,
         'create_recipe_id': w.create_recipe_id,
@@ -46,7 +53,11 @@ def get_weapons():
         'coating_poison' : w.coating_poison,
         'coating_sleep' : w.coating_sleep,
         'coating-blast' : w.coating_blast,
-        'ammo_id' : w.ammo_id
+        'ammo_id' : w.ammo_id,
+        'weapon_text': [{
+            'name': wt.name
+        }for wt in w.weapon_text]
 
-        } for w in weapons]
-    return jsonify(weapon_list)
+    } for w in weapon_data]
+
+    return weapon_list
