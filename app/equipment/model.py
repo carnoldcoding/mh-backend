@@ -1,5 +1,19 @@
 from app import db
 
+class WeaponText(db.Model):
+    __tablename__ = "weapon_text"
+
+    id = db.Column(db.Integer, primary_key = True)
+    lang_id = db.Column(db.Text)
+    name = db.Column(db.Text)
+
+class WeaponSkill(db.Model):
+    __tablename__ = "weapon_skill"
+
+    id = db.Column(db.Integer, primary_key = True)
+    skilltree_id = db.Column(db.Integer)
+    level = db.Column(db.Integer)
+
 class Weapon(db.Model):
     __tablename__ = "weapon"
 
@@ -9,12 +23,24 @@ class Weapon(db.Model):
     previous_weapon_id = db.Column(db.Integer)
     armorset_bonus_id = db.Column(db.Integer)
 
+    weapon_type = db.Column(db.Text)
+
     rarity = db.Column(db.Integer)
     category = db.Column(db.Text)
     attack = db.Column(db.Integer)
     attack_true = db.Column(db.Integer)
     affinity = db.Column(db.Integer)
     defense = db.Column(db.Integer)
+    sharpness = db.Column(db.Integer)
+    sharpness_maxed = db.Column(db.Boolean)
+
+    element1 = db.Column(db.Text)
+    element1_attack = db.Column(db.Integer)
+    element2 = db.Column(db.Text)
+    element2_attack = db.Column(db.Integer)
+    element_hidden = db.Column(db.Boolean)
+
+    elderseal = db.Column(db.Text)
 
     slot_1 = db.Column(db.Integer)
     slot_2 = db.Column(db.Integer)
@@ -24,3 +50,13 @@ class Weapon(db.Model):
     phial_power = db.Column(db.Integer)
     shelling = db.Column(db.Text)
     shelling_level = db.Column(db.Integer)
+
+    kinsect_bonus = db.Column(db.Text)
+
+    coating_close = db.Column(db.Integer)
+    coating_power = db.Column(db.Integer)
+    coating_paralysis = db.Column(db.Integer)
+    coating_poison = db.Column(db.Integer)
+    coating_sleep = db.Column(db.Integer)
+    coating_blast = db.Column(db.Integer)
+    ammo_id = db.Column(db.Integer)
