@@ -5,7 +5,7 @@ from app.equipment.service import get_weapons
 equipment = Blueprint("equipment", __name__)
 
 @equipment.route("/get_weapons", methods=['GET'])
-def weapons():
+def weapon_info():
     weapon_type = request.args.get('type')
     
     return jsonify(get_weapons(weapon_type))

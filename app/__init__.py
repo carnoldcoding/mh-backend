@@ -5,6 +5,7 @@ from app.extensions import db
 import os
 
 from app.equipment.routes import equipment
+from app.skills.routes import skills
 
 def create_app():
     #Load Environemntal Variables
@@ -21,5 +22,6 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(equipment)
+    app.register_blueprint(skills)
     
     return app

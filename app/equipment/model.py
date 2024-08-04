@@ -16,6 +16,7 @@ class WeaponSkill(db.Model):
     weapon_id = db.Column(db.Integer, db.ForeignKey('weapon.id'), primary_key = True)
     skilltree_id = db.Column(db.Integer)
     level = db.Column(db.Integer)
+    weapon = db.relationship('Weapon', backref=db.backref('weapon_skill', lazy=True))
 
 
 class Weapon(db.Model):

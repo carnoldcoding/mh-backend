@@ -1,9 +1,11 @@
 from app.equipment.model import Weapon, WeaponSkill, WeaponText
 from app import db
 from sqlalchemy import select
+from sqlalchemy.orm import aliased
 
 def get_weapons(weapon_type):
-    stmt = select(Weapon, WeaponText).join(WeaponText.weapon).where(WeaponText.lang_id == "en")
+
+    stmt = select(Weapon, WeaponText, WeaponSkill).join(WeaponText).join(WeaponSkill, WeaponSkill.weapon_id == Weapon.id).where(WeaponText.lang_id == "en")
     
     if weapon_type:
         stmt = stmt.where(Weapon.weapon_type == weapon_type)
@@ -54,6 +56,11 @@ def get_weapons(weapon_type):
         'coating_sleep' : w.coating_sleep,
         'coating-blast' : w.coating_blast,
         'ammo_id' : w.ammo_id,
+        'weapon_skill': [{
+            'weapon_id': ws.weapon_id,
+            'level': ws.level,
+            'skilltree_id': ws.skilltree_id,
+        } for ws in w.weapon_skill],
         'weapon_text': [{
             'name': wt.name
         }for wt in w.weapon_text]
