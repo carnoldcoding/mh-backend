@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from app.extensions import db
 import os
 
-from app.equipment.routes import equipment
-from app.skills.routes import skills
+#Import Blueprints
+from app.skills.routes import skill
 
 def create_app():
     #Load Environemntal Variables
@@ -21,7 +21,5 @@ def create_app():
     db.init_app(app)
 
     # Register blueprints
-    app.register_blueprint(equipment)
-    app.register_blueprint(skills)
-    
+    app.register_blueprint(skill)
     return app

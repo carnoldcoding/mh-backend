@@ -1,23 +1,22 @@
-from app.skills.model import Skill, SkillTree, SkillTreeText
 from app import db
-from sqlalchemy import select
+from sqlalchemy import select, Table, MetaData, and_
 
-def get_skills():
+metadata = MetaData()
 
-    stmt = select(Skill).join(SkillTree).where(Skill.lang_id == "en")
+def get_skill_data():
+    #Define Tables
+    skilltree = Table('skilltree', metadata, autoload_with=db.engine)
+    skilltree_text = Table('skilltree_text', metadata, autoload_with=db.engine)
+    skill = Table('skill', metadata, autoload_with=db.engine)
+
+    #Define Statement
+    stmt = select(skill, skilltree, skilltree_text)\
+        .select_from(skill.join(skilltree, skill.c.skilltree_id == skilltree.c.id)
+                     .join(skilltree_text, skilltree.c.id == skilltree_text.c.id))\
+        .where(and_(skill.c.lang_id == "en", skilltree_text.c.lang_id == "en"))\
+        .limit(10)
     
-    result = db.session.scalars(stmt.limit(50))
-
-    skill_data = [{
-        "level" : sd.level,
-        "description" : sd.description,
-        "skill_tree": {
-            "max_level": sd.skill_tree.max_level,
-            "icon_color" : sd.skill_tree.icon_color,
-            "secret" : sd.skill_tree.secret,
-            "unlocks_id" : sd.skill_tree.unlocks_id
-        }
-    } for sd in result]
-
-
-    return skill_data
+    #Execute, Parse and Return
+    result = db.session.execute(stmt)
+    map = [dict(row._mapping) for row in result]
+    return map

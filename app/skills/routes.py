@@ -1,9 +1,8 @@
-from flask import Blueprint, request, jsonify
-from app.skills.service import get_skills
+from flask import Blueprint, jsonify
+from app.skills.service import get_skill_data
 
-# Register Blueprint (Allows for modular routing)
-skills = Blueprint("skills", __name__)
+skill = Blueprint('skill', __name__)
 
-@skills.route("/get_skills", methods=['GET'])
-def skill_info():
-    return jsonify(get_skills())
+@skill.route('/get_skill')
+def get_skill():
+    return jsonify(get_skill_data())
