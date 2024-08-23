@@ -18,7 +18,10 @@ def get_weapon_data(weapon_name : str):
     skill_data = get_skill_data()
 
     #Define Statement
-    stmt = select(weapon, weapon_text, weapon_skill, 
+    stmt = select(weapon,
+                   weapon_text, 
+                   weapon_text.c.name.label('weapon_name'),
+                   weapon_skill, 
                   skill_data.c.description.label('skill_description'),
                   skill_data.c.level.label('skill_level'),
                   skill_data.c.name.label('skill_name'))\
