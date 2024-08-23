@@ -5,7 +5,6 @@ from app.extensions import db
 import os
 
 #Import Blueprints
-from app.skills.routes import skill
 from app.weapon.routes import weapon
 
 def create_app():
@@ -22,6 +21,5 @@ def create_app():
     db.init_app(app)
 
     # Register blueprints
-    app.register_blueprint(skill)
     app.register_blueprint(weapon)
     return app
