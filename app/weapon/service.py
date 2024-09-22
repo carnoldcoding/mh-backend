@@ -29,7 +29,7 @@ def get_weapon_data(weapon_name : str):
             .join(weapon_skill, weapon.c.id == weapon_skill.c.weapon_id, isouter=True))\
             .join(skill_data, weapon_skill.c.skilltree_id == skill_data.c.id, isouter=True)\
         .where(and_(weapon_text.c.lang_id == 'en', 
-                    weapon_text.c.name.ilike(f'%{weapon_name}%')))\
+                    weapon_text.c.name.ilike(f'{weapon_name}%')))\
         .limit(10)
 
     #Execute, Parse and Return
